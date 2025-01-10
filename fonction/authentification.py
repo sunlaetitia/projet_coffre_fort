@@ -14,9 +14,6 @@ DUREE_BLOCAGE = timedelta(minutes=2)
 def authentification_double_sens(utilisateur, mdp):
     base_de_donnee = utilitaire.charger_base_de_donnee()
     cles_coffre = utilitaire.charger_cles_coffre()
-
-    #print(mdp)
-    print(base_de_donnee[utilisateur]["hash_mdp"])
     if utilisateur not in base_de_donnee:
         print("Utilisateur inconnu.")
         journaliser_action("Connexion echouee", utilisateur, "Utilisateur inconnu", "Utilisateur inconnu")
@@ -43,10 +40,11 @@ def authentification_double_sens(utilisateur, mdp):
     if expiration < datetime.utcnow():
         print(f"Les clés de l'utilisateur {utilisateur} sont expirées. Veuillez les renouveler.")
         return False
-
+    userdoc = f"coffre_fort\\Utilisateurs\\{utilisateur}\\cles.pem"
+    with open(userdoc, "r") as fichier:
+        cle_privee_utilisateur = fichier.read()
     print("Phase d'authentification à double sens commencée.")
     cle_publique_utilisateur = base_de_donnee[utilisateur]["cle_publique"]
-    cle_privee_utilisateur = base_de_donnee[utilisateur]["cle_privee"]
     p = base_de_donnee[utilisateur]["p"]
     cle_privee_coffre = cles_coffre["cle_privee"]
     cle_publique_coffre = cles_coffre["cle_publique"]
@@ -75,7 +73,7 @@ def authentification_double_sens(utilisateur, mdp):
 
     print("Certificat vérifié par la CA avec succès.")
 
-    if  ZKP.protocole_guillou_quisquater(cle_publique_utilisateur, cle_privee_utilisateur, certificat_signature, p):
+    if  ZKP.protocole_guillou_quisquater(utilisateur, cle_publique_utilisateur, certificat_signature, p):
         print("Authentification réussie.")
         """
         utilisateur_data["tentatives"] = 0

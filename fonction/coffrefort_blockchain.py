@@ -189,7 +189,7 @@ class Blockchain:
         self.ajouter_donnees(donnees)
         print(f"Fichier '{fichier_nom}' ajouté à la blockchain par l'utilisateur '{utilisateur}'.")
 
-
+'''
 # Exemple d'utilisation
 print("Démarrage du programme...")
 blockchain = Blockchain(debug=True)
@@ -217,3 +217,4 @@ try:
 
 except Exception as e:
     print(f"Erreur rencontrée : {e}")
+'''
