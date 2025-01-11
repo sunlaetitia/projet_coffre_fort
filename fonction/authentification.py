@@ -4,7 +4,7 @@ import certificat
 import json
 from datetime import datetime, timedelta
 import ZKP
-from contexte import contexte, chemin_Utilisateurs
+from contexte import contexte, chemin_Utilisateurs, chemin_cles_coffre_json
 import utilitaire
 import dérivation
 from journalisation import journaliser_action
@@ -13,7 +13,7 @@ from journalisation import journaliser_action
 
 def authentification_double_sens(utilisateur, mdp):
     base_de_donnee = utilitaire.charger_base_de_donnee()
-    cles_coffre = utilitaire.charger_cles_coffre()
+    cles_coffre = utilitaire.charger_cle(chemin_cles_coffre_json)
     hash_mdp = dérivation.sha256(mdp.encode("utf-8"))
     if utilisateur not in base_de_donnee:
         print("Utilisateur inconnu.")

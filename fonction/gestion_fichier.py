@@ -293,8 +293,6 @@ def menu_blockchain(utilisateur, chemin_blockchain):
             blockchain.ajouter_fichier_au_bloc(fichier_nom, contenu_fichier, utilisateur)
             blockchain.sauvegarder_blockchain(chemin_blockchain)
 
-
-
         elif choix == "2":
             nom_fichier = input("Nom du fichier à récupérer : ")
             contenu = blockchain.charger_blockchain(chemin_blockchain).recuperer_fichier(nom_fichier)  # serialisation a partir du json

@@ -53,11 +53,17 @@ def charger_base_de_donnee():
             return json.load(fichier)
     return {}
 
-def charger_cles_coffre():
-    if os.path.exists(chemin_cles_coffre_json):
-        with open(chemin_cles_coffre_json, 'r') as fichier:
+# def charger_cles_coffre():
+#     if os.path.exists(chemin_cles_coffre_json):
+#         with open(chemin_cles_coffre_json, 'r') as fichier:
+#             return json.load(fichier)
+#     return {}
+def charger_cle(chemin):
+    if os.path.exists(chemin):
+        with open(chemin, 'r') as fichier:
             return json.load(fichier)
     return {}
+
 
 def ajouter_utilisateur(nom_utilisateur,hash_mdp, sel, cle_derivee, cle_privee, cle_publique,expiration, p):
     expiration = (datetime.utcnow() + timedelta(days=365)).isoformat()

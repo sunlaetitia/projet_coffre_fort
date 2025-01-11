@@ -4,7 +4,7 @@ import random
 import datetime
 from contexte import contexte, chemin_Utilisateurs
 
-def generer_certificat(chemin_dossier_utilisateur, cle_pub_utilisateur, cle_pri_coffre_fort, utilisateur):
+def generer_certificat(cle_pub_utilisateur, cle_pri_coffre_fort, utilisateur, chemin_fichier_utilisateur):
     e, n = cle_pub_utilisateur
     d_coffre_fort, n_coffre_fort = cle_pri_coffre_fort
     signature = pow(e, d_coffre_fort, n_coffre_fort)
@@ -21,8 +21,10 @@ Date_expiration: {date_expiration}
 Emetteur: Coffre-Fort
 Signature: {signature}
 -----END CERTIFICATE-----"""
-
-    return certificat, signature
+    cert_pem = os.path.join(chemin_fichier_utilisateur)
+    with open(cert_pem, "w") as certfile:
+        certfile.write(certificat)
+    return cert_pem
 
 def verifier_certificat(certificat, cle_publique_coffre_fort):
     signature = int(certificat.split("Signature: ")[1].split("\n")[0])
@@ -42,4 +44,4 @@ def enregistrer_certificat_utilisateur(nom_utilisateur, certificat_pem):
     chemin_certificat = generer_chemin_certificat(nom_utilisateur)
     with open(chemin_certificat, "w") as fichier_certificat:
         fichier_certificat.write(certificat_pem)
-    print(f"Certificat enregistré avec succès pour {nom_utilisateur}.")
+        

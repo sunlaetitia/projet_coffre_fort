@@ -25,9 +25,14 @@ class variable:
         self.cle_derivee = None # simplifié pour désigner l'utilisateur simple  
 
 chemin_coffre_fort = "coffre_fort"
+# chemin_CA = "Autorité_certification"
+chemin_ca = "CA"
 chemin_Utilisateurs ="coffre_fort\\Utilisateurs"
 chemin_doc_crypté = "coffre_fort\\doc_crypté"
 chemin_historique = "coffre_fort\\historique"
 chemin_bd_json =  "coffre_fort\\base_de_donnee.json"
 chemin_cles_coffre_json =  "coffre_fort\\cles_coffre.json"
+chemin_cles_ca_json =  "CA\\CA.json"
+chemin_cert_coffre_fort = "coffre_fort\\certificat.cert"
+
 contexte = variable()

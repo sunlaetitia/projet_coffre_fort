@@ -1,12 +1,13 @@
 import os
 import time
-from contexte import chemin_coffre_fort, chemin_Utilisateurs, chemin_doc_crypté, chemin_historique, chemin_bd_json
+from contexte import chemin_coffre_fort, chemin_Utilisateurs, chemin_doc_crypté, chemin_bd_json, chemin_ca, chemin_cles_coffre_json, chemin_cles_ca_json, chemin_cert_coffre_fort
 from contexte import contexte
 import authentification
 # import gestion_fichier
 import utilitaire
 import dérivation
 import gestion_fichier
+import certificat
 import json
 import re
 import shutil
@@ -18,6 +19,7 @@ from journalisation import journaliser_action
 
 def initialiser_repertoires():
     os.makedirs(chemin_coffre_fort, exist_ok=True)
+    os.makedirs(chemin_ca, exist_ok=True)
     os.makedirs(chemin_Utilisateurs, exist_ok=True)
     os.makedirs(chemin_doc_crypté, exist_ok=True)
 
@@ -29,7 +31,12 @@ def initialiser_repertoires():
         print("Clés RSA pour le coffre-fort générées et sauvegardées.")
     else:
         verifier_cle_perimee(chemin_cle_coffre)
-
+    # Génération des clés RSA pour l'autorité de certification si elles n'existent pas
+    chemin_CA = os.path.join(chemin_ca, "CA.json")
+    if not os.path.exists(chemin_CA):
+        cle_privee, cle_publique, expiration, p = generer_cle_RSA()
+        sauvegarder_cles(chemin_CA, cle_privee, cle_publique, expiration)
+        print("Clés RSA pour la CA générées et sauvegardées.")
     print("Arborescence des répertoires initialisée.")
 
 
@@ -119,6 +126,11 @@ except Exception as e:
 def menu_principal():
     print("Bienvenue dans le coffre-fort numérique!")
     nbre_tentatives = 0
+    cles_coffre = utilitaire.charger_cle(chemin_cles_coffre_json)
+    cle_ca = utilitaire.charger_cle(chemin_cles_ca_json)
+    cle_priv_ca = cle_ca["cle_privee"]
+    cle_publique_coffre = cles_coffre["cle_publique"]
+    certificat.generer_certificat(cle_publique_coffre, cle_priv_ca, "coffre_fort", chemin_cert_coffre_fort)
     while True:
         print("1. Inscription")
         print("2. Connexion")
@@ -149,18 +161,28 @@ def menu_principal():
             print("Inscription réussie!")
             
         elif choix == "2":
-            contexte.nom_utilisateur = input("Nom d'utilisateur: ")
-            contexte.hash_mdp = input("Mots de passe: ")
-            if authentification.authentification_double_sens(contexte.nom_utilisateur, contexte.hash_mdp) is None:
-                journaliser_action("Connexion", contexte.nom_utilisateur, "un nouvel utilisateur connecte", "vous vous êtes connecte.")
-                gestion_fichier.menu_general(contexte.nom_utilisateur)
+            if os.path.exists(chemin_cert_coffre_fort):
+                with open(chemin_cert_coffre_fort, "r") as fichier:
+                    certificat_contenu = fichier.read()
+                cle_pub_ca = cle_ca["cle_publique"]
+                if not certificat.verifier_certificat(certificat_contenu, cle_pub_ca):
+                    print("Échec de la vérification du certificat.")
+                else:
+                    print("Certificat vérifié avec succès.")
+                    contexte.nom_utilisateur = input("Nom d'utilisateur: ")
+                    contexte.hash_mdp = input("Mots de passe: ")
+                    if authentification.authentification_double_sens(contexte.nom_utilisateur, contexte.hash_mdp) is None:
+                        journaliser_action("Connexion", contexte.nom_utilisateur, "un nouvel utilisateur connecte", "vous vous êtes connecte.")
+                        gestion_fichier.menu_general(contexte.nom_utilisateur)
+                    else:
+                        print("Échec de la connexion.")
+                        nbre_tentatives += 1
+                        if nbre_tentatives == 3:
+                            print("###############Trop de tentatives, veuillez attendre un instant!################")
+                            time.sleep(10)
+                            nbre_tentatives = 0
             else:
-                print("Échec de la connexion.")
-                nbre_tentatives += 1
-                if nbre_tentatives == 3:
-                    print("###############Trop de tentatives, veuillez attendre un instant!################")
-                    time.sleep(10)
-                    nbre_tentatives = 0
+                print("##############  Coffre fort non valide  ##############")
         elif choix == "3":
             print("À bientôt!")
             break
