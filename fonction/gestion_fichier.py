@@ -6,7 +6,7 @@ import cobra
 import utilitaire
 from coffrefort_blockchain import Blockchain
 
-def ajouter_fichier(fichier, utilisateur, cle_derivee):
+def ajouter_fichier(fichier, utilisateur:str, cle_derivee):
     """Ajoute un fichier au coffre-fort avec des permissions personnalisées."""
     if not os.path.exists(fichier):
         print(f"Le fichier {fichier} n'existe pas.")
@@ -14,12 +14,22 @@ def ajouter_fichier(fichier, utilisateur, cle_derivee):
 
     try:
         # Demander les permissions à l'utilisateur
+        base_de_donnees = utilitaire.charger_base_de_donnee()
+        utilisateurs = list(base_de_donnees.keys())
+        viewers = [utilisateur]
         print("Paramètres de permissions pour le fichier :")
         rendre_public = input("Voulez-vous rendre ce fichier consultable par tout le monde ? (oui/non) : ").strip().lower() == "oui"
         permettre_modification = input("Voulez-vous permettre à tout le monde de modifier ce fichier ? (oui/non) : ").strip().lower() == "oui"
+        all_or_one_user = input("Voulez vous partager ce fichier avec tous les utilisateurs? (oui/non) : ").strip().lower() == "oui"
 
         if rendre_public:
-            viewers = "all"
+            if all_or_one_user:
+                viewers = "all"
+            else:
+                print("Avec qui voulez vous partager ce fichier? : " , " ,".join(utilisateurs))
+                viewers = input("Entrez votre choix (exactement comme affiché) : ")
+                viewers = viewers.split(" ,")
+                viewers.append(utilisateur)
         else:
             viewers = [utilisateur]
 
@@ -33,50 +43,89 @@ def ajouter_fichier(fichier, utilisateur, cle_derivee):
             'viewers': viewers,
             'editors': editors
         }
+        if "all" in viewers:
+            for user in utilisateurs:
+                repertoire_utilisateur = os.path.join(chemin_Utilisateurs, user, "fichiers_cryptes")
+                fichier_nom = os.path.basename(fichier)
+                chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
+                chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
+                # repertoire_utilisateur = os.path.join(chemin_Utilisateurs, utilisateur, "fichiers_cryptes")        # Créer le répertoire de l'utilisateur s'il n'existe pas
+        
 
-        repertoire_utilisateur = os.path.join(chemin_Utilisateurs, utilisateur, "fichiers_cryptes")        # Créer le répertoire de l'utilisateur s'il n'existe pas
-  
+                # Sauvegarder le fichier dans le répertoire de l'utilisateur
+                # fichier_nom = os.path.basename(fichier)
+                # chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
+                # chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
 
-        # Sauvegarder le fichier dans le répertoire de l'utilisateur
-        fichier_nom = os.path.basename(fichier)
-        chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
-        chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
+                # Chiffrer le contenu
+                contenu_chiffre = cobra.chiffrer_fichier(fichier, cle_derivee)
+            
+                ecriture_dans_fichier(chemin_fichier_chiffre, contenu_chiffre)
+                ecriture_dans_fichier(chemin_fichier_chiffre_coffre, contenu_chiffre)
+            
+            
+                # Créer le fichier metadata dans le même répertoire
+                metadata_file = chemin_fichier_chiffre + ".meta"
+                metadata_file_coffre = os.path.join(chemin_doc_crypté, "fichier_metadonnee" + ".meta")
+                metadata = {
+                    'permissions': permissions,
+                    'fichier_original': fichier_nom
+                }
+                with open(metadata_file, 'w') as f:
+                    json.dump(metadata, f)
+                with open(metadata_file_coffre, 'a') as f:
+                    json.dump(metadata, f)
+                    f.write('\n')
+                journaliser_action("Ajout de fichier", permissions.get("owner"), f"Fichier {fichier} ajouté.", f"Fichier {fichier} ajouté.")
+                print(f"Fichier chiffré sauvegardé sous : {chemin_fichier_chiffre}")
+            return chemin_fichier_chiffre
+        else:
+            print(viewers)
+            for user in viewers:
+                repertoire_utilisateur = os.path.join(chemin_Utilisateurs, user, "fichiers_cryptes")
+                fichier_nom = os.path.basename(fichier)
+                chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
+                chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
+                # repertoire_utilisateur = os.path.join(chemin_Utilisateurs, utilisateur, "fichiers_cryptes")        # Créer le répertoire de l'utilisateur s'il n'existe pas
+        
 
-        # Chiffrer le contenu
-        contenu_chiffre = cobra.chiffrer_fichier(fichier, cle_derivee)
-        '''
-        # Écrire le fichier chiffré
-        with open(chemin_fichier_chiffre, 'w') as fichier_sortie:
-            fichier_sortie.write(contenu_chiffre)
-            #print(contenu_chiffre)
-            #print(contenu_chiffre, file=fichier_sortie)
-        with open(chemin_fichier_chiffre_coffre, 'w') as fichier:
-            fichier.write(contenu_chiffre)
-            #print(contenu_chiffre, file=fichier_sortie)
-        '''
-    #------------------------------------------------------------------------------------------------------------
-        #message = "\x0dü\x1e\x17l%gó\x08F\x915pRXësè+ÈGªÊ2h¢\x95\x1bS~3qe et ¼á¿\x06Zd\x00\x00\x00\x00\x00"
+                # Sauvegarder le fichier dans le répertoire de l'utilisateur
+                # fichier_nom = os.path.basename(fichier)
+                # chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
+                # chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
 
-        # Nom du fichier
-        #nom_fichier = "contenu_fichier_suivi.txt"
+                # Chiffrer le contenu
+                contenu_chiffre = cobra.chiffrer_fichier(fichier, cle_derivee)
+            
+                ecriture_dans_fichier(chemin_fichier_chiffre, contenu_chiffre)
+                ecriture_dans_fichier(chemin_fichier_chiffre_coffre, contenu_chiffre)
+            
+            
+                # Créer le fichier metadata dans le même répertoire
+                metadata_file = chemin_fichier_chiffre + ".meta"
+                metadata_file_coffre = os.path.join(chemin_doc_crypté, "fichier_metadonnee" + ".meta")
+                metadata = {
+                    'permissions': permissions,
+                    'fichier_original': fichier_nom
+                }
+                with open(metadata_file, 'w') as f:
+                    json.dump(metadata, f)
+                with open(metadata_file_coffre, 'a') as f:
+                    json.dump(metadata, f)
+                    f.write('\n')
+                journaliser_action("Ajout de fichier", permissions.get("owner"), f"Fichier {fichier} ajouté.", f"Fichier {fichier} ajouté.")
+                print(f"Fichier chiffré sauvegardé sous : {chemin_fichier_chiffre}")
+            return chemin_fichier_chiffre
+            
+    except Exception as e:
+        print(f"Erreur lors de l'ajout du fichier : {e}")
+        journaliser_action("Ajout de fichier échoue", permissions.get("owner"), f"Erreur : {e}", f"Erreur : {e}")
+        return None
 
-        # Ouvrir le fichier une seule fois
-        with open(chemin_fichier_chiffre, 'w', encoding='utf-8') as fichier_sortie:
+def ecriture_dans_fichier(chemin, contenu):
+    with open(chemin, 'w', encoding='utf-8') as fichier:
             # Parcourir chaque caractère du message
-            for i in contenu_chiffre:
-                if i.isprintable():
-                    # Afficher le caractère imprimable et l'écrire dans le fichier
-                # print(i, end='')  # Affiche sans retour à la ligne
-                    print(i, file=fichier_sortie, end='')  # Écrit sans retour à la ligne
-                else:
-                    # Convertir le caractère non imprimable en code hexadécimal
-                    code_hex = f"\\x{ord(i):02x}"
-                # print(code_hex, end='')  # Affiche sans retour à la ligne
-                    print(code_hex, file=fichier_sortie, end='')  # Écrit sans retour à la ligne
-
-        with open(chemin_fichier_chiffre_coffre, 'w', encoding='utf-8') as fichier:
-            # Parcourir chaque caractère du message
-            for i in contenu_chiffre:
+            for i in contenu:
                 if i.isprintable():
                     # Afficher le caractère imprimable et l'écrire dans le fichier
                 # print(i, end='')  # Affiche sans retour à la ligne
@@ -87,34 +136,6 @@ def ajouter_fichier(fichier, utilisateur, cle_derivee):
                 # print(code_hex, end='')  # Affiche sans retour à la ligne
                     print(code_hex, file=fichier, end='')  # Écrit sans retour à la ligne
 
-        '''
-        with open(nom_fichier, 'r', encoding='utf-8') as fichier:
-                    contenu = fichier.read()  # Lire tout le contenu du fichier
-        print(f"Contenu du fichier '{nom_fichier}' :\n{contenu}")    
-        ''' 
-    #---------------------------------------------------------------------------------------------------
-        # Créer le fichier metadata dans le même répertoire
-        metadata_file = chemin_fichier_chiffre + ".meta"
-        metadata_file_coffre = os.path.join(chemin_doc_crypté, "fichier_metadonnee" + ".meta")
-
-
-        metadata = {
-            'permissions': permissions,
-            'fichier_original': fichier_nom
-        }
-        with open(metadata_file, 'w') as f:
-            json.dump(metadata, f)
-        with open(metadata_file_coffre, 'a') as f:
-            json.dump(metadata, f)
-            f.write('\n')
-        journaliser_action("Ajout de fichier", permissions.get("owner"), f"Fichier {fichier} ajouté.", f"Fichier {fichier} ajouté.")
-        print(f"Fichier chiffré sauvegardé sous : {chemin_fichier_chiffre}")
-        return chemin_fichier_chiffre
-    
-    except Exception as e:
-        print(f"Erreur lors de l'ajout du fichier : {e}")
-        journaliser_action("Ajout de fichier échoue", permissions.get("owner"), f"Erreur : {e}", f"Erreur : {e}")
-        return None
 
 def afficher_fichier(fichier_chiffre, cle_derivee, utilisateur):
     """Affiche le contenu d'un fichier déchiffré si l'utilisateur a les permissions."""

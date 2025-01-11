@@ -1,1 +1,140 @@
 je joue au ballon et je mamuse
+Tesla Business Model
+Designed For: Designed by: Date: Version:
+Key Partners
+Cost Structure Revenue Stream
+Key Activities
+Key Resources Channel
+Value Propositions Customer Relationship Customer Segments
+Partenaires : Panasonic (fournisseur de
+batteries), fournisseurs de matériaux rares,
+Partenaires technologiques (ex. NVIDIA).
+Ressources acquises grâce aux
+partenariats : Batteries haute performance,
+Accès à des infrastructures (recharge et
+production), Investissements financiers et
+innovation technique.
+Activités des partenaires : Production de
+batteries, Recherche sur les technologies
+durables, Gestion logistique et soutien
+industriel.
+Activités principales : Production de
+véhicules/batteries, R&D (conduite
+autonome), maintenance logicielle.
+Soutien aux revenus :
+Développement de logiciels
+premium, gestion des Gigafactories.
+Valeur offerte : Véhicules électriques haut
+de gamme avec une autonomie
+exceptionnelle, Solutions durables
+(batteries, panneaux solaires).
+Problèmes résolus : Réduction des
+émissions de CO2 et des coûts de
+carburant.
+Produits et services proposés: Véhicules
+électriques, solutions de recharge,
+panneaux solaires, Powerwall.
+Besoin clients satisfait: Performance,
+durabilité, prestige, commodité et innovation
+Caractéristiques :
+Performance : Vitesse, autonomie et technologie
+avancée.
+Commodité : Recharge rapide, mise à jour à
+distance.
+Nouveauté : Innovation constante (conduite
+autonome).
+Tesla révolutionne l’industrie en répondant
+aux besoins écologiques et de performance
+des consommateurs
+Canaux principaux : Site web Tesla,
+showrooms, stations Supercharger.
+Phases :
+Sensibilisation : Publicité en ligne, médias
+sociaux.
+1.
+2.Évaluation : Showrooms et essais routiers.
+3.Achat : Commandes en ligne.
+4.Livraison : À domicile ou en showroom.
+Support après-vente : Maintenance et mises à
+jour logicielles.
+5.
+Coûts majeurs : Production des batteries et véhicules, R&D sur les nouvelles technologies, Infrastructure des
+Gigafactories et Superchargers.
+Activités coûteuses : R&D( Technologies avancées comme l’intelligence artificielle ) et maintenance des
+infrastructures.
+Tesla adopte une stratégie Value Driven, se concentrant sur la création de valeur premium avec des véhicules électriques innovants et
+haut de gamme.
+*
+Coûts fixes : Salaires, loyers des usines, R&D et réseau de superchargeurs.
+Coûts variables : Coûts de production des véhicules, matériaux et logistique.
+Economie d'échelle : Réduction des coûts unitaires avec l'augmentation de la production (notamment des modèles populaires).
+Economie d’étendue : Synergies entre les véhicules, les batteries et l’énergie solaire pour optimiser les coûts.
+cible: Particuliers soucieux de
+l’écologie et recherchant des produits
+haut de gamme, entreprises souhaitant
+des flottes professionnelles durables.
+Clients les plus importants :
+Marché de masse : Grand public
+adoptant les véhicules électriques.
+Marché de niche : Clients haut de
+gamme attirés par l’innovation et la
+durabilité.
+Segmenté : Clients professionnels
+(flottes d’entreprise) et
+propriétaires recherchant des
+solutions énergétiques comme le
+Powerwall.
+Tesla s’adresse à un marché diversifié,
+alliant grand public, niches premium et
+entreprises, tout en répondant aux
+besoins écologiques et
+technologiques modernes.
+Motivations pour ces partenariats
+Réduction des coûts (économie d’échelle).
+Sécurisation de l’approvisionnement en matériaux
+critiques.
+Partage des risques liés à l’innovation.
+Les partenariats stratégiques permettent à
+Tesla de rester à la pointe de l’innovation
+tout en optimisant ses coûts.
+Chaîne de distribution: Infrastructure
+physique (usines et réseaux de recharge).
+TYPES DE RESSOURCES
+Physiques : Usines (Gigafactories), stations de
+recharge.
+Intellectuelles : Brevets, IA, algorithmes.
+Humaines : Experts en technologie et ingénierie.
+Financières : Investissements massifs.
+Type attendu : Premium et personnalisée
+Relation établie : Assistance directe,
+communautés en ligne, mises à jour
+automatisées
+Intégration au modèle d’affaires : Ventes en
+ligne, showrooms, stations Supercharger
+Coût : Modéré grâce à l’automatisation
+Exemples : Maintenance, mises à jour logicielles,
+programmes de fidélité
+TESLA INC. SUN PIAHA
+28/11/2024
+1
+Valeurs pour lesquelles les clients sont prêts à payer : Innovation et technologie de pointe, Durabilité et impact
+environnemental, Expérience de conduite unique
+Ce que les clients paient actuellement :
+Véhicules : Prix d'achat des voitures et options supplémentaires.
+Services : Entretien, réparation et mises à jour logicielles.
+Moyens de paiement actuels : Achat direct, Location (leasing)
+Préférences de paiement : Paiement échelonné, Abonnements pour services premium.
+Contribution des flux de revenue Types de revenus Stratégies de prix
+Vente de véhicules : Principal revenu.
+Abonnements et services : En croissance, incluant
+Autopilot et Supercharger.
+Énergie : Panneaux solaires et batteries Powerwall.
+Vente d’actifs : Véhicules, équipements.
+Frais d’utilisation : Stations de recharge.
+Frais d’abonnement : Services premium
+comme Full Self-Driving.
+Location : Leasing de véhicules.
+Prix fixe : Liste de prix pour véhicules et
+services.
+Prix dynamique : Négociations et gestion
+en temps réel pour services énergétiques

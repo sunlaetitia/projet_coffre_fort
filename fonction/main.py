@@ -1,5 +1,5 @@
 import os
-from contexte import chemin_coffre_fort, chemin_Utilisateurs, chemin_doc_crypté, chemin_historique, chemin_bd_json
+from contexte import chemin_coffre_fort, chemin_Utilisateurs, chemin_doc_crypté, chemin_historique, chemin_bd_json, chemin_fichiers_partagés
 from contexte import contexte
 import authentification
 # import gestion_fichier
@@ -19,7 +19,7 @@ def initialiser_repertoires():
     os.makedirs(chemin_coffre_fort, exist_ok=True)
     os.makedirs(chemin_Utilisateurs, exist_ok=True)
     os.makedirs(chemin_doc_crypté, exist_ok=True)
-    os.makedirs(chemin_historique, exist_ok=True)
+    os.makedirs(chemin_fichiers_partagés, exist_ok=True)
 
 
     # Génération des clés RSA pour le coffre-fort si elles n'existent pas

@@ -1,0 +1,38 @@
+2025-01-10 23:24:36.859081 - Action: Inscription | Utilisateur: sun | Details: Nouvel utilisateur inscrit
+2025-01-10 23:25:06.143507 - Action: Inscription | Utilisateur: yvan | Details: Nouvel utilisateur inscrit
+2025-01-10 23:25:36.321623 - Action: Inscription | Utilisateur: sara | Details: Nouvel utilisateur inscrit
+2025-01-10 23:39:02.112862 - Action: Connexion echouee | Utilisateur: sun | Details: Mots de passe incorrect
+2025-01-10 23:39:54.321828 - Action: Connexion echouee | Utilisateur: sun | Details: Mots de passe incorrect
+2025-01-10 23:40:18.217572 - Action: Connexion echouee | Utilisateur: yvan | Details: Mots de passe incorrect
+2025-01-10 23:40:36.829344 - Action: Connexion echouee | Utilisateur: clara | Details: Utilisateur inconnu
+2025-01-10 23:41:15.019442 - Action: Connexion echouee | Utilisateur: SUN | Details: Utilisateur inconnu
+2025-01-10 23:41:31.673585 - Action: Connexion | Utilisateur: sun | Details: un nouvel utilisateur connecte
+2025-01-10 23:42:14.543278 - Action: Ajout de fichier | Utilisateur: sun | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\Aldi.txt ajouté.
+2025-01-10 23:51:34.148562 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-10 23:51:59.300362 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\arena.txt ajouté.
+2025-01-10 23:51:59.587264 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\arena.txt ajouté.
+2025-01-10 23:51:59.870487 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\arena.txt ajouté.
+2025-01-10 23:54:19.529725 - Action: Ajout de fichier échoue | Utilisateur: yvan | Details: Erreur : [Errno 2] No such file or directory: 'coffre_fort\\Utilisateurs\\s\\fichiers_cryptes\\alo.txt.chiffre'
+2025-01-11 00:06:01.989464 - Action: Connexion echouee | Utilisateur: yvan | Details: Mots de passe incorrect
+2025-01-11 00:06:15.313277 - Action: Connexion echouee | Utilisateur: yvan | Details: Mots de passe incorrect
+2025-01-11 00:06:39.141042 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:07:06.085687 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-11 00:08:36.126136 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:08:56.031834 - Action: Ajout de fichier échoue | Utilisateur: yvan | Details: Erreur : argument of type 'NoneType' is not iterable
+2025-01-11 00:10:21.402717 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:10:41.940530 - Action: Ajout de fichier échoue | Utilisateur: yvan | Details: Erreur : argument of type 'NoneType' is not iterable
+2025-01-11 00:11:48.700768 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:12:07.373461 - Action: Ajout de fichier échoue | Utilisateur: yvan | Details: Erreur : 'NoneType' object is not iterable
+2025-01-11 00:15:49.744416 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:16:21.317576 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-11 00:19:13.087347 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:22:06.969141 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:22:27.514761 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-11 00:22:27.536907 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-11 00:24:14.278970 - Action: Ajout de fichier échoue | Utilisateur: yvan | Details: Erreur : [Errno 2] No such file or directory: 'coffre_fort\\Utilisateurs\\sun ,sara\\fichiers_cryptes\\alo.txt.chiffre'
+2025-01-11 00:29:17.393572 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:29:52.238187 - Action: Ajout de fichier échoue | Utilisateur: yvan | Details: Erreur : join() argument must be str, bytes, or os.PathLike object, not 'list'
+2025-01-11 00:34:54.508048 - Action: Connexion | Utilisateur: yvan | Details: un nouvel utilisateur connecte
+2025-01-11 00:35:15.734002 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-11 00:35:15.748668 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-11 00:35:15.762163 - Action: Ajout de fichier | Utilisateur: yvan | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.

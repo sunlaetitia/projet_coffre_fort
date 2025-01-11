@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 import utilitaire
-from contexte import chemin_historique, chemin_Utilisateurs
+from contexte import chemin_coffre_fort, chemin_Utilisateurs
 """
 def configurer_journal_utilisateur(nom_utilisateur):
     chemin_journal_utilisateur = os.path.join(chemin_Utilisateurs, nom_utilisateur, "journal.log")
@@ -10,7 +10,7 @@ def configurer_journal_utilisateur(nom_utilisateur):
     return chemin_journal_utilisateur
 """
 def ecrire_journal_global(message):
-    fichier_global = os.path.join(chemin_historique, "journal_global.log")
+    fichier_global = os.path.join(chemin_coffre_fort, "journal_global.log")
     with open(fichier_global, "a") as fichier:
         fichier.write(f"{datetime.utcnow()} - {message}\n")
 
