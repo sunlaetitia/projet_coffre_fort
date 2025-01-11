@@ -69,9 +69,7 @@ def ajouter_utilisateur(nom_utilisateur,hash_mdp, sel, cle_derivee, cle_privee, 
         "cle_publique": cle_publique,
         "p": p,
         "hash_mdp": hash_mdp,
-        "expiration": expiration,
-        "tentatives": 0,  # Pour le suivi des tentatives échouées
-        "bloque_jusqu_a": None
+        "expiration": expiration
 
     }
     with open(chemin_bd_json, "w") as fichier:

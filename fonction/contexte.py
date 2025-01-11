@@ -30,5 +30,4 @@ chemin_doc_crypté = "coffre_fort\\doc_crypté"
 chemin_historique = "coffre_fort\\historique"
 chemin_bd_json =  "coffre_fort\\base_de_donnee.json"
 chemin_cles_coffre_json =  "coffre_fort\\cles_coffre.json"
-chemin_fichiers_partagés = "coffre_fort\\fichiers_partagés"
 contexte = variable()

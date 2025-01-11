@@ -130,7 +130,7 @@ class Blockchain:
                 return contenu
         return None
      #ajout sun================================
-    def sauvegarder_blockchain(self, chemin_fichier="blockchain.json"):
+    def sauvegarder_blockchain(self, chemin_fichier):
         """
         Sauvegarde la blockchain dans un fichier JSON.
         """
@@ -153,7 +153,7 @@ class Blockchain:
             print(f"Erreur lors de la sauvegarde de la blockchain : {e}")
 
     @classmethod
-    def charger_blockchain(cls, chemin_fichier="blockchain.json", debug=True):
+    def charger_blockchain(cls, chemin_fichier, debug=True):
         """
         Charge la blockchain depuis un fichier JSON.
         Si le fichier n'existe pas, initialise une nouvelle blockchain.
@@ -188,33 +188,3 @@ class Blockchain:
         donnees = f"FICHIER:{fichier_nom}|UTILISATEUR:{utilisateur}|CONTENU:{contenu_fichier}"
         self.ajouter_donnees(donnees)
         print(f"Fichier '{fichier_nom}' ajouté à la blockchain par l'utilisateur '{utilisateur}'.")
-
-'''
-# Exemple d'utilisation
-print("Démarrage du programme...")
-blockchain = Blockchain(debug=True)
-print("Chaîne de blocs initialisée avec le bloc genèse.")
-
-try:
-    # Dépôt de fichiers dans le coffre-fort
-    blockchain.deposer_fichier("document1.txt", "Ceci est le contenu du fichier 1.")
-    blockchain.deposer_fichier("document2.txt", "Ceci est le contenu du fichier 2.")
-
-    # Récupération des fichiers
-    contenu1 = blockchain.recuperer_fichier("document1.txt")
-    contenu2 = blockchain.recuperer_fichier("document2.txt")
-
-    print("\nFichiers récupérés depuis la chaîne de blocs :")
-    print(f"document1.txt : {contenu1}")
-    print(f"document2.txt : {contenu2}")
-
-    if blockchain.chaine_valide():
-        print("\nLa chaîne de blocs est valide.")
-
-    print("\nAffichage des blocs dans la chaîne de blocs :")
-    for bloc in blockchain.chaine:
-        print(f"Indice: {bloc.indice}, Hash: {bloc.hash}, Hash précédent: {bloc.hash_precedent}, Données: {bloc.donnees}, Preuve: {bloc.preuve}")
-
-except Exception as e:
-    print(f"Erreur rencontrée : {e}")
-'''

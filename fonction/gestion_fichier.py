@@ -6,6 +6,8 @@ import cobra
 import utilitaire
 from coffrefort_blockchain import Blockchain
 
+blockchain =  Blockchain(debug=True) # creation d'une instance de classe 
+
 def ajouter_fichier(fichier, utilisateur:str, cle_derivee):
     """Ajoute un fichier au coffre-fort avec des permissions personnalisées."""
     if not os.path.exists(fichier):
@@ -141,7 +143,7 @@ def afficher_fichier(fichier_chiffre, cle_derivee, utilisateur):
     """Affiche le contenu d'un fichier déchiffré si l'utilisateur a les permissions."""
     if not os.path.exists(fichier_chiffre + ".meta"):
         print(f"Le fichier {fichier_chiffre} n'existe pas.")
-        journaliser_action("Consultation échouee", utilisateur, f"Fichier {fichier_chiffre} introuvable.", f"Fichier {fichier_chiffre} introuvable.")
+        journaliser_action("Consultation echouee", utilisateur, f"Fichier {fichier_chiffre} introuvable.", f"Fichier {fichier_chiffre} introuvable.")
         return
 
     try:
@@ -166,7 +168,7 @@ def supprimer_fichier(fichier_chiffre, utilisateur):
     """Supprime un fichier du coffre-fort si l'utilisateur est le propriétaire."""
     if not os.path.exists(fichier_chiffre + ".meta"):
         print(f"Le fichier {fichier_chiffre} n'existe pas.")
-        journaliser_action("Suppression échouee", utilisateur, f"Fichier {fichier_chiffre} introuvable.", f"Fichier {fichier_chiffre} introuvable.")
+        journaliser_action("Suppression echouee", utilisateur, f"Fichier {fichier_chiffre} introuvable.", f"Fichier {fichier_chiffre} introuvable.")
         return
 
     try:
@@ -227,8 +229,10 @@ def menu_general(utilisateur):
         elif choix_mode == "2":
             # Initialisation ou chargement de la blockchain
             chemin_blockchain = initialiser_blockchain(utilisateur)
-            blockchain = Blockchain.charger_blockchain(chemin_blockchain)
-            menu_blockchain(utilisateur, blockchain, chemin_blockchain)
+            # blockchain = Blockchain.charger_blockchain(chemin_blockchain)
+            #menu_blockchain(utilisateur, blockchain, chemin_blockchain)
+            menu_blockchain(utilisateur, chemin_blockchain)
+
         elif choix_mode == "3":
             print("Déconnexion réussie. À bientôt !")
             break
@@ -286,26 +290,26 @@ def menu_blockchain(utilisateur, chemin_blockchain):
             fichier_nom = os.path.basename(chemin_fichier)
             with open(chemin_fichier, "r") as f:
                 contenu_fichier = f.read()
-            Blockchain.ajouter_fichier_au_bloc(fichier_nom, contenu_fichier, utilisateur)
-            Blockchain.sauvegarder_blockchain(chemin_blockchain)
+            blockchain.ajouter_fichier_au_bloc(fichier_nom, contenu_fichier, utilisateur)
+            blockchain.sauvegarder_blockchain(chemin_blockchain)
 
 
 
         elif choix == "2":
             nom_fichier = input("Nom du fichier à récupérer : ")
-            contenu = Blockchain.recuperer_fichier(nom_fichier)
+            contenu = blockchain.charger_blockchain(chemin_blockchain).recuperer_fichier(nom_fichier)  # serialisation a partir du json
             if contenu:
                 print(f"Contenu du fichier {nom_fichier} : {contenu}")
             else:
                 print(f"Le fichier {nom_fichier} n'a pas été trouvé dans la blockchain.")
         elif choix == "3":
-            if Blockchain.chaine_valide():
+            if blockchain.chaine_valide():
                 print("La chaîne de blocs est valide.")
             else:
                 print("La chaîne de blocs est invalide.")
         elif choix == "4":
             print("\nAffichage des blocs dans la blockchain :")
-            for bloc in Blockchain.chaine:
+            for bloc in blockchain.chaine:
                 print(f"Indice: {bloc.indice}, Hash: {bloc.hash}, Données: {bloc.donnees}, Preuve: {bloc.preuve}")
         elif choix == "5":
             print("Retour au menu principal.")

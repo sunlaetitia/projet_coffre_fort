@@ -1,4 +1,5 @@
 #authentification.py
+import time
 import certificat
 import json
 from datetime import datetime, timedelta
@@ -8,8 +9,7 @@ import utilitaire
 import dérivation
 from journalisation import journaliser_action
 
-MAX_TENTATIVES = 5
-DUREE_BLOCAGE = timedelta(minutes=2)
+
 
 def authentification_double_sens(utilisateur, mdp):
     base_de_donnee = utilitaire.charger_base_de_donnee()
@@ -24,25 +24,13 @@ def authentification_double_sens(utilisateur, mdp):
         return False
     
     donnee_utilisateur = base_de_donnee[utilisateur]
-        # Vérifier si l'utilisateur est bloqué
-    if "bloque_jusqu_a" in donnee_utilisateur and donnee_utilisateur["bloque_jusqu_a"]:
-        bloque_jusqu_a = datetime.fromisoformat(donnee_utilisateur["bloque_jusqu_a"])
-        if datetime.utcnow() < bloque_jusqu_a:
-            print(f"L'utilisateur est temporairement bloqué jusqu'à {bloque_jusqu_a}.")
-            journaliser_action("Connexion echouee", utilisateur, "Utilisateur bloque", "vous etes bloque")
-            return False
-        else:
-            # Réinitialiser le statut de blocage
-            donnee_utilisateur["bloque_jusqu_a"] = None
-            donnee_utilisateur["tentatives"] = 0
+
 
     expiration = datetime.fromisoformat(donnee_utilisateur.get("expiration", ""))
     if expiration < datetime.utcnow():
         print(f"Les clés de l'utilisateur {utilisateur} sont expirées. Veuillez les renouveler.")
         return False
     userdoc = f"coffre_fort\\Utilisateurs\\{utilisateur}\\cles.pem"
-    with open(userdoc, "r") as fichier:
-        cle_privee_utilisateur = fichier.read()
     print("Phase d'authentification à double sens commencée.")
     cle_publique_utilisateur = base_de_donnee[utilisateur]["cle_publique"]
     p = base_de_donnee[utilisateur]["p"]

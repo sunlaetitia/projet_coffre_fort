@@ -1,5 +1,6 @@
 import os
-from contexte import chemin_coffre_fort, chemin_Utilisateurs, chemin_doc_crypté, chemin_historique, chemin_bd_json, chemin_fichiers_partagés
+import time
+from contexte import chemin_coffre_fort, chemin_Utilisateurs, chemin_doc_crypté, chemin_historique, chemin_bd_json
 from contexte import contexte
 import authentification
 # import gestion_fichier
@@ -19,8 +20,6 @@ def initialiser_repertoires():
     os.makedirs(chemin_coffre_fort, exist_ok=True)
     os.makedirs(chemin_Utilisateurs, exist_ok=True)
     os.makedirs(chemin_doc_crypté, exist_ok=True)
-    os.makedirs(chemin_fichiers_partagés, exist_ok=True)
-
 
     # Génération des clés RSA pour le coffre-fort si elles n'existent pas
     chemin_cle_coffre = os.path.join(chemin_coffre_fort, "cles_coffre.json")
@@ -119,6 +118,7 @@ except Exception as e:
 
 def menu_principal():
     print("Bienvenue dans le coffre-fort numérique!")
+    nbre_tentatives = 0
     while True:
         print("1. Inscription")
         print("2. Connexion")
@@ -155,6 +155,11 @@ def menu_principal():
                 gestion_fichier.menu_general(contexte.nom_utilisateur)
             else:
                 print("Échec de la connexion.")
+                nbre_tentatives += 1
+                if nbre_tentatives == 3:
+                    print("###############Trop de tentatives, veuillez attendre un instant!################")
+                    time.sleep(10)
+                    nbre_tentatives = 0
         elif choix == "3":
             print("À bientôt!")
             break

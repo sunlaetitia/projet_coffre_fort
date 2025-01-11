@@ -116,33 +116,3 @@ class Blockchain:
 
     def get_proof_for_block(self, index):
         return self.proof_storage.get(index, None)
-'''
-# Exemple d'utilisation
-print("Démarrage du programme...")
-blockchain = Blockchain(debug=True)
-print("Blockchain initialisée avec le bloc genesis.")
-
-try:
-    blockchain.add_data("Données sensibles 1")
-    blockchain.add_data("Données sensibles 2")
-    blockchain.add_data("Données sensibles 3")
-    blockchain.add_data("Données sensibles 4")
-
-    if blockchain.is_chain_valid():
-        print("La blockchain est valide.")
-
-    print("Affichage des blocs dans la blockchain :")
-    for block in blockchain.chain:
-        print(f"Index: {block.index}, Hash: {block.hash}, Previous Hash: {block.previous_hash}, Data: {block.data}, Proof: {block.proof}")
-
-    print("\nRécupération des preuves de travail :")
-    for i in range(len(blockchain.chain)):
-        proof = blockchain.get_proof_for_block(i)
-        if proof is not None:
-            print(f"Preuve de travail pour le bloc {i}: {proof}")
-        else:
-            print(f"Aucune preuve de travail trouvée pour le bloc {i}.")
-
-except Exception as e:
-    print(f"Erreur rencontrée : {e}")
-'''
