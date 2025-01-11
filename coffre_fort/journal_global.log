@@ -62,3 +62,6 @@
 2025-01-11 02:01:05.093198 - Action: Connexion echouee | Utilisateur: yvan | Details: Mots de passe incorrect
 2025-01-11 02:18:58.272869 - Action: Connexion echouee | Utilisateur: SUN | Details: Utilisateur inconnu
 2025-01-11 02:19:15.298450 - Action: Connexion | Utilisateur: sun | Details: un nouvel utilisateur connecte
+2025-01-11 09:47:17.953250 - Action: Inscription | Utilisateur: san | Details: Nouvel utilisateur inscrit
+2025-01-11 09:47:52.996361 - Action: Connexion echouee | Utilisateur: san | Details: Mots de passe incorrect
+2025-01-11 09:50:25.286409 - Action: Connexion | Utilisateur: san | Details: un nouvel utilisateur connecte

@@ -14,11 +14,12 @@ from journalisation import journaliser_action
 def authentification_double_sens(utilisateur, mdp):
     base_de_donnee = utilitaire.charger_base_de_donnee()
     cles_coffre = utilitaire.charger_cles_coffre()
+    hash_mdp = dérivation.sha256(mdp.encode("utf-8"))
     if utilisateur not in base_de_donnee:
         print("Utilisateur inconnu.")
         journaliser_action("Connexion echouee", utilisateur, "Utilisateur inconnu", "Utilisateur inconnu")
         return False
-    elif mdp != base_de_donnee[utilisateur]["hash_mdp"]:
+    elif hash_mdp != base_de_donnee[utilisateur]["hash_mdp"]:
         print("Mots de passe incorrect!")
         journaliser_action("Connexion echouee", utilisateur, "Mots de passe incorrect", "Mots de passe incorrect")
         return False

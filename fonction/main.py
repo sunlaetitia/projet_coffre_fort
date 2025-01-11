@@ -134,6 +134,7 @@ def menu_principal():
                 mot_de_passe = input("Le mot de passe n'est pas robuste. Veuillez recommencer: ")
             sel = utilitaire.generer_sel()
             contexte.cle_derivee = dérivation.derivee_cle(mot_de_passe, sel, iterations = 1000, longueur_cle = 16)
+            hash_mdp = dérivation.sha256(mot_de_passe.encode("utf-8"))
             '''
             print(contexte.cle_derivee)
             print("taille cle derivee",cobra.count_bits(cobra.text_to_binary(contexte.cle_derivee)))
@@ -142,7 +143,7 @@ def menu_principal():
             #
             cle_privee, cle_publique, expiration, p = generer_cle_RSA()
             chemin_utilisateur = creer_arborescence_utilisateur(contexte.nom_utilisateur)
-            utilitaire.ajouter_utilisateur(contexte.nom_utilisateur, mot_de_passe, sel, contexte.cle_derivee, cle_privee, cle_publique, expiration, p)
+            utilitaire.ajouter_utilisateur(contexte.nom_utilisateur, hash_mdp, sel, contexte.cle_derivee, cle_privee, cle_publique, expiration, p)
             
             journaliser_action("Inscription", contexte.nom_utilisateur, "Nouvel utilisateur inscrit", "vous vous etes inscrit.")
             print("Inscription réussie!")
