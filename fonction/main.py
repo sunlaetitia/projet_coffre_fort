@@ -156,7 +156,7 @@ def menu_principal():
             cle_privee, cle_publique, expiration, p = generer_cle_RSA()
             chemin_utilisateur = creer_arborescence_utilisateur(contexte.nom_utilisateur)
             utilitaire.ajouter_utilisateur(contexte.nom_utilisateur, hash_mdp, sel, contexte.cle_derivee, cle_privee, cle_publique, expiration, p)
-            
+            certificat.generer_certificat(cle_publique, cle_privee, contexte.nom_utilisateur, f"{chemin_utilisateur}\\certificat.cert" )
             journaliser_action("Inscription", contexte.nom_utilisateur, "Nouvel utilisateur inscrit", "vous vous etes inscrit.")
             print("Inscription réussie!")
             

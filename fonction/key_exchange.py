@@ -1,35 +1,54 @@
 import random
+from  utilitaire import miller_rabin
+import utilitaire
+from contexte import chemin_cles_coffre_json
 
-def text_to_binary(text):
-    """Convertit une chaîne de caractères en une chaîne binaire."""
-    return ''.join(format(ord(char), '08b') for char in text)
+# cles_coffre = utilitaire.charger_cle(chemin_cles_coffre_json)
+# cle_pub_coffre = cles_coffre["cle_publique"][0]
+# cle_pri_coffre = cles_coffre["cle_privee"][0]
 
-# Fonction pour vérifier si un nombre est premier
-def est_premier(x):
-    if x < 2:
-        return False
-    for i in range(2, int(x**0.5) + 1):
-        if x % i == 0:
-            return False
-    return True
+# base_de_donnee = utilitaire.charger_base_de_donnee()
+# cle_pub_user = base_de_donnee["clara"]["cle_publique"][0]
 
-# Fonction pour trouver un nombre premier plus grand qu'un certain nombre
-def trouver_premier(n):
-    while not est_premier(n):
-        n += 1
-    return n
 
-# Fonction pour trouver un générateur valide pour un nombre premier donné
+# userdoc = f"coffre_fort\\Utilisateurs\\{"clara"}\\cles.pem"
+# with open(userdoc, "r") as fichier:
+#     cle_pri_user = fichier.read()
+# cle_pri_user = cle_pri_user.strip("[] \n")
+# cle_pri_user = [int(x.strip()) for x in cle_pri_user.split(",")]
+# cle_pri_user = cle_pri_user[0]
+# print(cle_pri_user)
+# print("\n")
+# print("\n")
+# print(cle_pub_coffre)
+
+
+def generer_premier(bits, k=10):
+    """
+    Génère un nombre premier de la taille spécifiée en bits.
+    k : nombre d'itérations pour le test de Miller-Rabin.
+    """
+    while True:
+        # Générer un candidat aléatoire de la taille spécifiée
+        candidat = random.getrandbits(bits)
+        candidat |= (1 << bits - 1) | 1  # S'assurer qu'il est impair et a le bon nombre de bits
+        if miller_rabin(candidat, k):
+            return candidat
+
+
 def trouver_generateur(prime):
-    """Trouve un générateur valide pour un nombre premier."""
+    """
+    Trouve un générateur valide pour un nombre premier donné.
+    """
     for g in range(2, prime):
-        if all(pow(g, k, prime) != 1 for k in range(1, prime - 1)):
+        if pow(g, 2, prime) != 1 and pow(g, prime - 1, prime) == 1:
             return g
     raise ValueError("Aucun générateur valide trouvé.")
 
+
 def diffie_hellmann(cle_privee_coffre, cle_publique_coffre, cle_privee_utilisateur, cle_publique_utilisateur):
     # Étape 1 : Génération des paramètres Diffie-Hellman
-    prime = trouver_premier(2**128)  # Générer un grand nombre premier (p) pour garantir une clé de 128 bits
+    prime = generer_premier(256)  # Générer un nombre premier de 2048 bits
     generator = trouver_generateur(prime)  # Trouver un générateur valide (g)
 
     # Étape 2 : Génération des clés privées et publiques
@@ -46,18 +65,6 @@ def diffie_hellmann(cle_privee_coffre, cle_publique_coffre, cle_privee_utilisate
     # Vérification : Les clés partagées doivent être identiques
     assert cle_de_session_coffre == cle_de_session_client, "Les clés de session ne correspondent pas !"
 
-    # Étape 4 : Transformation de la clé en binaire
-    cle_partagee_binaire = text_to_binary(str(cle_de_session_coffre))
-
-    # Vérification de la longueur de la clé binaire
-    if len(cle_partagee_binaire) < 128:
-        print("Attention : la clé générée est inférieure à 128 bits.")
-    else:
-        cle_partagee_binaire = cle_partagee_binaire[:128]  # Tronquer à 128 bits si nécessaire
-
-    print(f"Paramètres : p = {prime}, g = {generator}")
-    print(f"Clé partagée (en binaire) : {cle_partagee_binaire}")
-    print(f"Taille de la clé : {len(cle_partagee_binaire)} bits")
-
-# Appel de la fonction
-diffie_hellmann()
+    # print(f"Paramètres : p = {prime}, g = {generator}")
+    # print(f"Clé partagée : {cle_de_session_coffre}")
+    return cle_de_session_coffre
