@@ -8,7 +8,7 @@ def protocole_guillou_quisquater(cle_pub_utilisateur, cle_pri_utilisateur, certi
     - cle_privee_utilisateur : (d_utilisateur, n_utilisateur)
     """
     e_utilisateur, n_utilisateur = cle_pub_utilisateur
-    d_utilisateur, _ = cle_pri_utilisateur
+    d_utilisateur = cle_pri_utilisateur
 
     m = random.randint(1, p - 1)
 

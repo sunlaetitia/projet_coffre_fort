@@ -103,7 +103,7 @@ def menu_principal():
     cle_ca = utilitaire.charger_cle(chemin_cles_ca_json)
     cle_priv_ca = cle_ca["cle_privee"] 
     cle_publique_coffre = cles_coffre["cle_publique"]
-    signature, cert_pem = certificat.generer_certificat(cle_publique_coffre, cle_priv_ca, "coffre_fort", chemin_cert_coffre_fort)
+    signature, _ = certificat.generer_certificat(cle_publique_coffre, cle_priv_ca, "coffre_fort", chemin_cert_coffre_fort)
     while True:
         print("1. Inscription")
         print("2. Connexion")

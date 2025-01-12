@@ -107,7 +107,7 @@ def ajouter_fichier(fichier, utilisateur:str, cle_derivee):
             
     except Exception as e:
         print(f"Erreur lors de l'ajout du fichier : {e}")
-        journaliser_action("Ajout de fichier échoue", permissions.get("owner"), f"Erreur : {e}", f"Erreur : {e}")
+        journaliser_action("Ajout de fichier echoue", permissions.get("owner"), f"Erreur : {e}", f"Erreur : {e}")
         return None
 
 def ecriture_dans_fichier(chemin, contenu):
@@ -252,7 +252,7 @@ def menu_gestion_fichiers(utilisateur):
             print("\n") 
             print(f"{message_clair}")    
         elif choix == '5':
-            print("affichage réussie. À bientôt!")
+            print("Deconnexion réussie. À bientôt!")
             break
         else:
             print("Choix invalide. Veuillez réessayer.")
@@ -270,40 +270,51 @@ def menu_blockchain(utilisateur, chemin_blockchain):
         choix = input("Votre choix : ")
 
         if choix == "1":
-            chemin_fichier = input("Chemin du fichier : ")
+            chemin_fichier = input("Chemin du fichier(path) : ")
             fichier_nom = os.path.basename(chemin_fichier)
             with open(chemin_fichier, "r") as f:
                 contenu_fichier = f.read()
             blockchain.ajouter_fichier_au_bloc(fichier_nom, contenu_fichier, utilisateur)
             blockchain.sauvegarder_blockchain(chemin_blockchain)
+            journaliser_action("ajout de fichier reussi", utilisateur, f"Fichier {fichier_nom} ajoute.", f"Fichier {fichier_nom} ajoute.")
+
 
         elif choix == "2":
-            chemin_fichier = input("Chemin blockchain : ")
-            indice_bloc = int(input("Numero d'indice: "))
-            print("ok")
-            preuve = blockchain.charger_blockchain(chemin_blockchain).recuperer_preuve(chemin_fichier, indice_bloc)
-            if preuve:
-                print(f"La preuve de travail du fichier {chemin_fichier} : {preuve}")
+            nom_fichier = input("Nom du fichier à récupérer dans la blockchain: ")
+            contenu = blockchain.charger_blockchain(chemin_blockchain).recuperer_fichier(nom_fichier)  # serialisation a partir du json
+            if contenu:
+                print(f"Contenu du fichier {nom_fichier} : {contenu}")
+                journaliser_action("consultation de fichier reussi", utilisateur, f"Fichier {nom_fichier} consulte.", f"Fichier {nom_fichier} consulte.")
+
             else:
-                print(f"Le fichier {chemin_fichier} n'a pas été trouvé dans la blockchain.") 
-              
+                print(f"Le fichier {nom_fichier} n'a pas été trouvé dans la blockchain.") 
+                journaliser_action("echec de la consultation de fichier", utilisateur, f"Fichier {nom_fichier} non consulte.", f"Fichier {nom_fichier} non consulte.")
+
+
         elif choix == "3":
             
-            nom_fichier = input("Nom du fichier à récupérer : ")
-            indice_bloc = int(input("Numero d'indice: "))
+            nom_fichier = input("Chemin de votre blockchain: ")
+            indice_bloc = int(input("Numero d'indice de bloc: "))
             print("ok")
             preuve = blockchain.charger_blockchain(chemin_blockchain).recuperer_preuve(nom_fichier, indice_bloc)
             
             if preuve:
-                print(f"La preuve de traival du fichier {nom_fichier} : {preuve}")
+                print(f"La preuve de travail du fichier {nom_fichier} : {preuve}")
+                journaliser_action("consultation de la preuve reussi", utilisateur, f"Fichier {nom_fichier} preuve consulte.", f"Fichier {nom_fichier} preuve consulte.")
+
             else:
                 print(f"Le fichier {nom_fichier} n'a pas été trouvé dans la blockchain.") 
-            
+                journaliser_action("echec de la consultation de la preuve", utilisateur, f"Fichier {nom_fichier} preuve non consulte.", f"Fichier {nom_fichier} preuve non consulte.")
+
                 
         elif choix == "4":
             print("\nAffichage des blocs dans la blockchain :")
-            for bloc in blockchain.chaine:
+            
+            Bloc = blockchain.charger_blockchain(chemin_blockchain)
+            
+            for bloc in Bloc.chaine:
                 print(f"Indice: {bloc.indice}, Hash: {bloc.hash}, Données: {bloc.donnees}, Preuve: {bloc.preuve}")
+
         elif choix == "5":
             print("Retour au menu principal.")
             break

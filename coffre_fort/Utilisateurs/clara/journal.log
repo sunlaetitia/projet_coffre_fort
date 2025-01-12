@@ -1,0 +1,6 @@
+2025-01-12 16:10:58.592562 - Action: Inscription | Utilisateur: clara | Details: vous vous etes inscrit.
+2025-01-12 16:11:12.378857 - Action: Connexion | Utilisateur: clara | Details: vous vous êtes connecte.
+2025-01-12 16:12:45.563040 - Action: Ajout de fichier échoue | Utilisateur: clara | Details: Erreur : [Errno 2] No such file or directory: 'coffre_fort\\Utilisateurs\\sun vava\\fichiers_cryptes\\alo.txt.chiffre'
+2025-01-12 16:13:54.713071 - Action: Ajout de fichier | Utilisateur: clara | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-12 16:13:54.724345 - Action: Ajout de fichier | Utilisateur: clara | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-12 16:13:54.745794 - Action: Ajout de fichier | Utilisateur: clara | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.

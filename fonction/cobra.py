@@ -465,8 +465,6 @@ def dechiffrer_fichier(fichier, cle_derivee):
             # Ajouter directement les caractères imprimables
             message_reconstruit += contenu_fichier[i]
             i += 1
-    print(message_reconstruit)
-
     encrypt_binary_message = convertir_texte_en_binaire(message_reconstruit)
     Blocks = [encrypt_binary_message[i:i + 128] for i in range(0, len(encrypt_binary_message), 128)]
     Blocks[len(Blocks)-1] = pad_binary(Blocks[len(Blocks)-1])

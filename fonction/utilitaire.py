@@ -142,5 +142,5 @@ def puissance_modulaire(m, e, n):
 # Vérifier la robustesse du mot de passe
 def verifier_mot_de_passe(mot_de_passe):
     """Vérifie si un mot de passe est robuste."""
-    regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()+=\-_{}[\]|\\:;\"'<>,.?/])[A-Za-z\d@$!%*?&^#()+=\-_{}[\]|\\:;\"'<>,.?/]{8,}$"
+    regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()+=\-_{}[\]|\\:;\"'<>,.?/])[A-Za-z\d@$!%*?&^#()+=\-_{}[\]|\\:;\"'<>,.?/]{5,}$"
     return re.match(regex, mot_de_passe) is not None

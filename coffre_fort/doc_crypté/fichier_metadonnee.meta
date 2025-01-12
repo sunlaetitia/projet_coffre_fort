@@ -1,3 +1,5 @@
-{"permissions": {"owner": "alberic", "viewers": ["alberic"], "editors": "all"}, "fichier_original": "alo.txt"}
-{"permissions": {"owner": "alberic", "viewers": "all", "editors": "all"}, "fichier_original": "Aldi.txt"}
-{"permissions": {"owner": "alberic", "viewers": "all", "editors": "all"}, "fichier_original": "Aldi.txt"}
+{"permissions": {"owner": "vava", "viewers": ["sun", "vava"], "editors": "all"}, "fichier_original": "alo.txt"}
+{"permissions": {"owner": "vava", "viewers": ["sun", "vava"], "editors": "all"}, "fichier_original": "alo.txt"}
+{"permissions": {"owner": "clara", "viewers": ["sun", "vava", "clara"], "editors": ["clara"]}, "fichier_original": "alo.txt"}
+{"permissions": {"owner": "clara", "viewers": ["sun", "vava", "clara"], "editors": ["clara"]}, "fichier_original": "alo.txt"}
+{"permissions": {"owner": "clara", "viewers": ["sun", "vava", "clara"], "editors": ["clara"]}, "fichier_original": "alo.txt"}
