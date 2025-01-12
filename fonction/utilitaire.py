@@ -1,7 +1,7 @@
 import random
 import json
 import os
-from contexte import chemin_cles_coffre_json, chemin_bd_json
+from contexte import chemin_bd_json
 import re
 from datetime import datetime, timedelta
 
@@ -53,11 +53,6 @@ def charger_base_de_donnee():
             return json.load(fichier)
     return {}
 
-# def charger_cles_coffre():
-#     if os.path.exists(chemin_cles_coffre_json):
-#         with open(chemin_cles_coffre_json, 'r') as fichier:
-#             return json.load(fichier)
-#     return {}
 def charger_cle(chemin):
     if os.path.exists(chemin):
         with open(chemin, 'r') as fichier:

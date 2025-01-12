@@ -1,8 +1,7 @@
 import random as rd
 import json
 
-
-#Conversion du fichier de caractères en fichier de binaires: // ok
+#Conversion du fichier de caractères en fichier de binaires: 
 
 def Text_To_Binary(Fichier_Text, Nom_fichier):
   with open(Fichier_Text, 'r', encoding='utf-8') as fichier:
@@ -12,9 +11,7 @@ def Text_To_Binary(Fichier_Text, Nom_fichier):
     fichier_binaire.write(Message_bin)
   return Message_bin
 
-
-
-#Affichage d'un message binaire en message avec caractères // ok
+#Affichage d'un message binaire en message avec caractères 
 
 def Bin_To_Text(Texte_binaire, Nom_fichier):
   Message_Code = ' '.join(Texte_binaire[i : i+8] for i in range(0, len(Texte_binaire), 8))
@@ -24,16 +21,6 @@ def Bin_To_Text(Texte_binaire, Nom_fichier):
   with open(Nom_fichier, 'w', encoding='utf-8') as fichier_message:
     fichier_message.write(Message_decode)
   print(Message_decode)
-
-#Bin_To_Text(Message_chiffre, "Faux_Message.txt")
-
-
-
-
-
-# Cas d'un text // juste pour tester le dechiffrement 
-
-
 
 
 def Text_To_Binary(text):
@@ -48,8 +35,6 @@ def binary_to_text(binary_string):
     #Convertit une chaîne binaire en une chaîne de caractères.
     chars = [chr(int(binary_string[i:i+8], 2)) for i in range(0, len(binary_string), 8)]
     return ''.join(chars) 
-
-
 
 
 def afficher_binaire_en_texte(binary_message):
@@ -107,21 +92,15 @@ def unpad_binary(binary_message):
     """Supprime le padding ajouté lors du chiffrement."""
     return binary_message.rstrip('0')   
 
-
-
-
-
-#Générer une clé de N bits // ok mais a modifier
+#Générer une clé de N bits 
 
 def Key_of_N_bits(N): # Générer une clé de N bits
   return ''.join(str(rd.randint(0,1)) for i in range (N))
 
-Key = Key_of_N_bits(256)   # pour cobra on utilisera une cle de 256 bits 
-#Key
+Key = Key_of_N_bits(256)  
 
 
-#2.   Substitution &   4. Transformation   Linéaire
-
+#2.   Substitution &  4. Transformation   Linéaire
 
 # SBOX 
 # Quatre S-boxes de 4 bits (16 valeurs possibles pour chaque S-box)
@@ -134,7 +113,7 @@ S_BOXES = [
 ]
 
 
-#compter les bits des cles // OK
+#compter les bits des cles 
 def count_bits(binary_key):
     """
     Compte tous les bits d'une clé binaire.
@@ -147,8 +126,6 @@ def count_bits(binary_key):
         raise ValueError("La clé doit contenir uniquement des caractères '0' et '1'.")
     
 
-
-    
 def substitute_using_sbox(word, sbox):
     """
     Applique la substitution à une sous-clé de 32 bits (8 blocs de 4 bits) en utilisant une S-box.
@@ -163,10 +140,6 @@ def substitute_using_sbox(word, sbox):
         substituted += sbox[index]  # Applique la S-box (chaque entrée est une chaîne binaire de 4 bits)
     return substituted
 
-
-
-
-
 def apply_sbox_to_group(subkey_group, sbox):
     """
     Applique la substitution via la S-box à un groupe de 4 sous-clés de 32 bits.
@@ -177,10 +150,7 @@ def apply_sbox_to_group(subkey_group, sbox):
     return [substitute_using_sbox(word, sbox) for word in subkey_group]
 
 
-
-
 # le key scheduling permettra de generer 33 cles pour les 32 tours de chiffrement a partir de la cle secrete initiale(256 bits par des 0 padding ou pas)
-# ok
 def key_expansion(initial_key):
     """
     Génère 132 sous-clés de 32 bits pour l'algorithme COBRA basé sur Serpent.
@@ -220,8 +190,6 @@ def key_expansion(initial_key):
 
     # Étape 3 : Retourner seulement les sous-clés de 32 bits
     return W[8:]  # On retourne les sous-clés générées de w8 à w131
-
-
 
 def generate_round_keys(W):
     """
@@ -265,9 +233,7 @@ def extract_first_12_keys(initial_key): # extrait les 12 premieres cles pour red
     return all_keys[:12]
 
 
-
 #3. La-Feistel-de-Réré
-
 
 def inverse_bits_in_byte(byte):
     """
@@ -464,27 +430,13 @@ def chiffrer_fichier(fichier, cle_derivee):
     for block in Blocks:
         message = feistel_encrypt(block,first_12_keys)
         encrypted_message += message
-    print(f"Message chiffré: {afficher_binaire_en_texte(encrypted_message)}")
     message_chiffre = afficher_binaire_en_texte(encrypted_message)
     #message_chiffre_bytes = binary_to_bytes(encrypted_message)
     return message_chiffre
 
-'''chemin = "C:\\Users\\Master\\GS15\\arena.txt"
-cle = "a730785f2079ed777583738797f68aa7"
-chiffrer_fichier(chemin, cle)
-'''
 def dechiffrer_fichier(fichier, cle_derivee):
     first_12_keys = extract_first_12_keys(text_to_binary(bytes.fromhex(cle_derivee)))
-    '''
-    if fichier.endswith(".json.chiffre"):
-        with open(fichier, "r") as f:
-            contenu_chiffre = json.load(f)
-            contenu_fichier = json.dumps(contenu_chiffre)  # Convertir en chaîne pour le traitement
-    elif fichier.endswith(".chiffre"):
-        with open(fichier, "rb") as f:
-            contenu_fichier = f.read() #.decode('utf-8', errors='ignore')
-    '''
-    #====================================================================================
+   
     # Ouvrir et lire le contenu du fichier
     with open(fichier, 'r', encoding='utf-8') as fichier_sortie:
         contenu_fichier = fichier_sortie.read()
@@ -514,7 +466,7 @@ def dechiffrer_fichier(fichier, cle_derivee):
             message_reconstruit += contenu_fichier[i]
             i += 1
     print(message_reconstruit)
-    #===================================================================================
+
     encrypt_binary_message = convertir_texte_en_binaire(message_reconstruit)
     Blocks = [encrypt_binary_message[i:i + 128] for i in range(0, len(encrypt_binary_message), 128)]
     Blocks[len(Blocks)-1] = pad_binary(Blocks[len(Blocks)-1])

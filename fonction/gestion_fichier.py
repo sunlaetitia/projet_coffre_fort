@@ -51,14 +51,7 @@ def ajouter_fichier(fichier, utilisateur:str, cle_derivee):
                 fichier_nom = os.path.basename(fichier)
                 chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
                 chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
-                # repertoire_utilisateur = os.path.join(chemin_Utilisateurs, utilisateur, "fichiers_cryptes")        # Créer le répertoire de l'utilisateur s'il n'existe pas
-        
-
-                # Sauvegarder le fichier dans le répertoire de l'utilisateur
-                # fichier_nom = os.path.basename(fichier)
-                # chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
-                # chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
-
+                
                 # Chiffrer le contenu
                 contenu_chiffre = cobra.chiffrer_fichier(fichier, cle_derivee)
             
@@ -88,14 +81,7 @@ def ajouter_fichier(fichier, utilisateur:str, cle_derivee):
                 fichier_nom = os.path.basename(fichier)
                 chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
                 chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
-                # repertoire_utilisateur = os.path.join(chemin_Utilisateurs, utilisateur, "fichiers_cryptes")        # Créer le répertoire de l'utilisateur s'il n'existe pas
-        
-
-                # Sauvegarder le fichier dans le répertoire de l'utilisateur
-                # fichier_nom = os.path.basename(fichier)
-                # chemin_fichier_chiffre = os.path.join(repertoire_utilisateur, fichier_nom + ".chiffre")
-                # chemin_fichier_chiffre_coffre = os.path.join(chemin_doc_crypté, fichier_nom + ".chiffre")
-
+                
                 # Chiffrer le contenu
                 contenu_chiffre = cobra.chiffrer_fichier(fichier, cle_derivee)
             
@@ -229,8 +215,6 @@ def menu_general(utilisateur):
         elif choix_mode == "2":
             # Initialisation ou chargement de la blockchain
             chemin_blockchain = initialiser_blockchain(utilisateur)
-            # blockchain = Blockchain.charger_blockchain(chemin_blockchain)
-            #menu_blockchain(utilisateur, blockchain, chemin_blockchain)
             menu_blockchain(utilisateur, chemin_blockchain)
 
         elif choix_mode == "3":
@@ -279,7 +263,7 @@ def menu_blockchain(utilisateur, chemin_blockchain):
         print("\nMode Blockchain : Que souhaitez-vous faire ?")
         print("1. Ajouter un fichier à la blockchain")
         print("2. Récupérer un fichier depuis la blockchain")
-        #print("3. Valider la chaîne de blocs")
+        print("3. Afficher la preuve de travail")
         print("4. Afficher tous les blocs de la blockchain")
         print("5. Retour au menu principal")
         
@@ -294,17 +278,28 @@ def menu_blockchain(utilisateur, chemin_blockchain):
             blockchain.sauvegarder_blockchain(chemin_blockchain)
 
         elif choix == "2":
-            nom_fichier = input("Nom du fichier à récupérer : ")
-            contenu = blockchain.charger_blockchain(chemin_blockchain).recuperer_fichier(nom_fichier)  # serialisation a partir du json
-            if contenu:
-                print(f"Contenu du fichier {nom_fichier} : {contenu}")
+            chemin_fichier = input("Chemin blockchain : ")
+            indice_bloc = int(input("Numero d'indice: "))
+            print("ok")
+            preuve = blockchain.charger_blockchain(chemin_blockchain).recuperer_preuve(chemin_fichier, indice_bloc)
+            if preuve:
+                print(f"La preuve de travail du fichier {chemin_fichier} : {preuve}")
             else:
-                print(f"Le fichier {nom_fichier} n'a pas été trouvé dans la blockchain.")
+                print(f"Le fichier {chemin_fichier} n'a pas été trouvé dans la blockchain.") 
+              
         elif choix == "3":
-            if blockchain.chaine_valide():
-                print("La chaîne de blocs est valide.")
+            
+            nom_fichier = input("Nom du fichier à récupérer : ")
+            indice_bloc = int(input("Numero d'indice: "))
+            print("ok")
+            preuve = blockchain.charger_blockchain(chemin_blockchain).recuperer_preuve(nom_fichier, indice_bloc)
+            
+            if preuve:
+                print(f"La preuve de traival du fichier {nom_fichier} : {preuve}")
             else:
-                print("La chaîne de blocs est invalide.")
+                print(f"Le fichier {nom_fichier} n'a pas été trouvé dans la blockchain.") 
+            
+                
         elif choix == "4":
             print("\nAffichage des blocs dans la blockchain :")
             for bloc in blockchain.chaine:

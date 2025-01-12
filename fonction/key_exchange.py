@@ -1,26 +1,5 @@
 import random
 from  utilitaire import miller_rabin
-import utilitaire
-from contexte import chemin_cles_coffre_json
-
-# cles_coffre = utilitaire.charger_cle(chemin_cles_coffre_json)
-# cle_pub_coffre = cles_coffre["cle_publique"][0]
-# cle_pri_coffre = cles_coffre["cle_privee"][0]
-
-# base_de_donnee = utilitaire.charger_base_de_donnee()
-# cle_pub_user = base_de_donnee["clara"]["cle_publique"][0]
-
-
-# userdoc = f"coffre_fort\\Utilisateurs\\{"clara"}\\cles.pem"
-# with open(userdoc, "r") as fichier:
-#     cle_pri_user = fichier.read()
-# cle_pri_user = cle_pri_user.strip("[] \n")
-# cle_pri_user = [int(x.strip()) for x in cle_pri_user.split(",")]
-# cle_pri_user = cle_pri_user[0]
-# print(cle_pri_user)
-# print("\n")
-# print("\n")
-# print(cle_pub_coffre)
 
 
 def generer_premier(bits, k=10):
@@ -65,6 +44,4 @@ def diffie_hellmann(cle_privee_coffre, cle_publique_coffre, cle_privee_utilisate
     # Vérification : Les clés partagées doivent être identiques
     assert cle_de_session_coffre == cle_de_session_client, "Les clés de session ne correspondent pas !"
 
-    # print(f"Paramètres : p = {prime}, g = {generator}")
-    # print(f"Clé partagée : {cle_de_session_coffre}")
     return cle_de_session_coffre

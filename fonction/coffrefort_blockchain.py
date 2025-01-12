@@ -11,23 +11,17 @@ class Bloc:
         self.hash = self.calculer_hash()
 
     def calculer_hash(self):
-        """Calcule le hash du bloc avec une fonction personnalisée."""
-        chaine_bloc = (
-            str(self.indice) +
-            self.hash_precedent +
-            str(self.horodatage) +
-            self.donnees +
-            str(self.preuve)
-        )
-        return self.hash_simple(chaine_bloc)
+        contenu = f"{self.indice}{self.hash_precedent}{self.horodatage}{self.donnees}{self.preuve}"
+        return self.hash_simple(contenu)
 
     @staticmethod
     def hash_simple(chaine_entree):
         """Fonction de hachage personnalisée (non cryptographique)."""
-        valeur_hash = 0
-        for caractere in chaine_entree:
-            valeur_hash = (valeur_hash * 31 + ord(caractere)) % (2 ** 32)
-        return format(valeur_hash, '08x')
+        hash_value = 0
+        prime = 31
+        for i, char in enumerate(chaine_entree):
+         hash_value += (ord(char) * (prime ** i)) % 10**8
+        return str(hash_value % 10**8).zfill(8)
 
 class Blockchain:
     def __init__(self, debug=True):
@@ -35,7 +29,7 @@ class Blockchain:
         if self.debug:
             print("Initialisation de la chaîne de blocs...")
         self.chaine = [self.creer_bloc_genese()]
-        self.difficulte = 0  # Réduire temporairement la difficulté pour les tests
+        self.difficulte = 1  # Réduire temporairement la difficulté pour les tests
         self.stockage_preuves = {0: 0}  # Stockage des preuves avec une preuve par défaut pour le bloc genèse
 
     def creer_bloc_genese(self):
@@ -64,20 +58,29 @@ class Blockchain:
         bloc.preuve = 0
         temps_debut = time.time()
         iterations = 0
+        
+        p=0
         while not self.preuve_valide(bloc, bloc.preuve):
-            bloc.preuve += 10  # Augmentation par pas de 10 pour accélérer
+
+            p+=1
+            bloc.preuve += 2*p*p
             iterations += 1
+            if iterations % 100000 == 0:
+                print(f"Progression : {iterations} itérations, Preuve : {bloc.preuve}, Hash : {bloc.calculer_hash()}")
             if time.time() - temps_debut > limite_temps:
                 print(f"Nombre d'itérations effectuées : {iterations}")
                 raise TimeoutError("Preuve de travail non trouvée dans le temps imparti.")
+        
         if self.debug:
-            print(f"Preuve de travail trouvée pour le bloc {bloc.indice}: {bloc.preuve} après {iterations} itérations.")
+            print(f"Preuve trouvée pour le bloc {bloc.indice}: {bloc.preuve} après {iterations} itérations.")
         return bloc.preuve
-
+    
+    #
     def preuve_valide(self, bloc, preuve):
         bloc.preuve = preuve
         tentative_hash = bloc.calculer_hash()
         return tentative_hash[:self.difficulte] == "0" * self.difficulte
+
 
     def chaine_valide(self):
         if self.debug:
@@ -129,7 +132,30 @@ class Blockchain:
                 contenu = bloc.donnees.split("|CONTENU:")[1]
                 return contenu
         return None
-     #ajout sun================================
+    
+    def recuperer_preuve(self, chemin_fichier, indice_bloc):
+    
+     try:
+         with open(chemin_fichier, "r") as fichier:
+             chaine_serialisee = json.load(fichier)
+             for bloc in chaine_serialisee:
+                 if bloc["indice"] == indice_bloc:
+                    return bloc["preuve"]
+             print(f"Bloc avec l'indice {indice_bloc} introuvable dans la blockchain.")
+             return None
+     except FileNotFoundError:
+         print(f"Fichier {chemin_fichier} introuvable.")
+         return None
+     except json.JSONDecodeError:
+         print(f"Erreur de décodage JSON dans le fichier {chemin_fichier}.")
+         return None
+     except KeyError as e:
+        print(f"Clé manquante dans les données JSON : {e}")
+        return None
+    
+   
+
+
     def sauvegarder_blockchain(self, chemin_fichier):
         """
         Sauvegarde la blockchain dans un fichier JSON.
@@ -188,3 +214,7 @@ class Blockchain:
         donnees = f"FICHIER:{fichier_nom}|UTILISATEUR:{utilisateur}|CONTENU:{contenu_fichier}"
         self.ajouter_donnees(donnees)
         print(f"Fichier '{fichier_nom}' ajouté à la blockchain par l'utilisateur '{utilisateur}'.")
+
+    
+
+

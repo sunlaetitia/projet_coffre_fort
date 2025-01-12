@@ -2,7 +2,7 @@
 import os
 import random
 import datetime
-from contexte import contexte, chemin_Utilisateurs
+
 
 def generer_certificat(cle_pub_utilisateur, cle_pri_coffre_fort, utilisateur, chemin_fichier_utilisateur):
     e, n = cle_pub_utilisateur
@@ -24,7 +24,7 @@ Signature: {signature}
     cert_pem = os.path.join(chemin_fichier_utilisateur)
     with open(cert_pem, "w") as certfile:
         certfile.write(certificat)
-    return cert_pem
+    return signature, cert_pem
 
 def verifier_certificat(certificat, cle_publique_coffre_fort):
     signature = int(certificat.split("Signature: ")[1].split("\n")[0])

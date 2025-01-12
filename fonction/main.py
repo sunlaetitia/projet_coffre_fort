@@ -3,20 +3,17 @@ import time
 from contexte import chemin_coffre_fort, chemin_Utilisateurs, chemin_doc_crypté, chemin_bd_json, chemin_ca, chemin_cles_coffre_json, chemin_cles_ca_json, chemin_cert_coffre_fort
 from contexte import contexte
 import authentification
-# import gestion_fichier
 import utilitaire
 import dérivation
 import gestion_fichier
 import certificat
 import json
 import re
-import shutil
-import cobra   #
-from datetime import datetime, timedelta
+from datetime import datetime
 from utilitaire import generer_cle_RSA, renouveler_cle_RSA
 from journalisation import journaliser_action
 
-
+#Fonction pour initialiser les répertoires au démarrage du programme
 def initialiser_repertoires():
     os.makedirs(chemin_coffre_fort, exist_ok=True)
     os.makedirs(chemin_ca, exist_ok=True)
@@ -40,7 +37,7 @@ def initialiser_repertoires():
     print("Arborescence des répertoires initialisée.")
 
 
-
+# sauvegarde dans un fichier json des clés publics et privées
 def sauvegarder_cles(chemin, cle_privee, cle_publique, expiration):
     with open(chemin, "w") as fichier:
         json.dump({
@@ -98,39 +95,15 @@ def demander_nom_utilisateur():
         
         # Si toutes les vérifications sont passées
         return nom_utilisateur
-    
-
-"""
-def nettoyer_donnees_utilisateur(chemin_utilisateur):
-    
-    Supprime les données utilisateur créées temporairement.
-    :param chemin_utilisateur: Chemin du répertoire utilisateur à supprimer.
-    
-    try:
-        # Vérifie si le répertoire existe avant de le supprimer
-        if os.path.exists(chemin_utilisateur):
-            shutil.rmtree(chemin_utilisateur)  # Supprime tout le répertoire
-            print(f"Données temporaires supprimées pour l'utilisateur : {chemin_utilisateur}")
-    except Exception as e:
-        print(f"Erreur lors du nettoyage : {e}")
-
-
-except KeyboardInterrupt:
-                print("\nProcessus interrompu par l'utilisateur (Ctrl+C). Nettoyage en cours...")
-                nettoyer_donnees_utilisateur(chemin_utilisateur)
-except Exception as e:
-                print(f"Une erreur s'est produite : {e}")
-                nettoyer_donnees_utilisateur(chemin_utilisateu
-"""
 
 def menu_principal():
-    print("Bienvenue dans le coffre-fort numérique!")
-    nbre_tentatives = 0
+    print("Bienvenue dans le coffre-fort numérique!") 
+    nbre_tentatives = 0     #Initialise le nombre de tentatives du client
     cles_coffre = utilitaire.charger_cle(chemin_cles_coffre_json)
     cle_ca = utilitaire.charger_cle(chemin_cles_ca_json)
-    cle_priv_ca = cle_ca["cle_privee"]
+    cle_priv_ca = cle_ca["cle_privee"] 
     cle_publique_coffre = cles_coffre["cle_publique"]
-    certificat.generer_certificat(cle_publique_coffre, cle_priv_ca, "coffre_fort", chemin_cert_coffre_fort)
+    signature, cert_pem = certificat.generer_certificat(cle_publique_coffre, cle_priv_ca, "coffre_fort", chemin_cert_coffre_fort)
     while True:
         print("1. Inscription")
         print("2. Connexion")
@@ -147,12 +120,6 @@ def menu_principal():
             sel = utilitaire.generer_sel()
             contexte.cle_derivee = dérivation.derivee_cle(mot_de_passe, sel, iterations = 1000, longueur_cle = 16)
             hash_mdp = dérivation.sha256(mot_de_passe.encode("utf-8"))
-            '''
-            print(contexte.cle_derivee)
-            print("taille cle derivee",cobra.count_bits(cobra.text_to_binary(contexte.cle_derivee)))
-            print(cobra.text_to_binary(contexte.cle_derivee))
-            '''
-            #
             cle_privee, cle_publique, expiration, p = generer_cle_RSA()
             chemin_utilisateur = creer_arborescence_utilisateur(contexte.nom_utilisateur)
             utilitaire.ajouter_utilisateur(contexte.nom_utilisateur, hash_mdp, sel, contexte.cle_derivee, cle_privee, cle_publique, expiration, p)
@@ -171,7 +138,7 @@ def menu_principal():
                     print("Certificat vérifié avec succès.")
                     contexte.nom_utilisateur = input("Nom d'utilisateur: ")
                     contexte.hash_mdp = input("Mots de passe: ")
-                    if authentification.authentification_double_sens(contexte.nom_utilisateur, contexte.hash_mdp) is None:
+                    if authentification.authentification_double_sens(contexte.nom_utilisateur, contexte.hash_mdp, signature) is None:
                         journaliser_action("Connexion", contexte.nom_utilisateur, "un nouvel utilisateur connecte", "vous vous êtes connecte.")
                         gestion_fichier.menu_general(contexte.nom_utilisateur)
                     else:

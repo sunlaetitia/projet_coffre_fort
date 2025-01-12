@@ -1,22 +1,15 @@
 import random
-from contexte import contexte
-import certificat
 
-def protocole_guillou_quisquater(utilisateur, cle_pub_utilisateur, certificat_signature, p):
+
+def protocole_guillou_quisquater(cle_pub_utilisateur, cle_pri_utilisateur, certificat_signature, p):
     """
     Implémentation du protocole de Guillou-Quisquater.
     - cle_publique_utilisateur : (e_utilisateur, n_utilisateur)
     - cle_privee_utilisateur : (d_utilisateur, n_utilisateur)
     """
-    userdoc = f"coffre_fort\\Utilisateurs\\{utilisateur}\\cles.pem"
-    with open(userdoc, "r") as fichier:
-        cle_pri_utilisateur = fichier.read()
-    cle_pri_utilisateur = cle_pri_utilisateur.strip("[] \n")
-    cle_pri_utilisateur = [int(x.strip()) for x in cle_pri_utilisateur.split(",")]
-    # Étape 1 : Initialisation des clés
     e_utilisateur, n_utilisateur = cle_pub_utilisateur
-    d_utilisateur = cle_pri_utilisateur[0]
- 
+    d_utilisateur, _ = cle_pri_utilisateur
+
     m = random.randint(1, p - 1)
 
     # Calcul de M = m^e (mod n)

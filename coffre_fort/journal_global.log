@@ -1,2 +1,30 @@
 2025-01-11 16:37:57.151704 - Action: Inscription | Utilisateur: sun | Details: Nouvel utilisateur inscrit
 2025-01-11 16:38:29.032370 - Action: Connexion | Utilisateur: sun | Details: un nouvel utilisateur connecte
+2025-01-11 17:49:57.462266 - Action: Inscription | Utilisateur: alberic | Details: Nouvel utilisateur inscrit
+2025-01-11 17:50:35.222075 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-11 17:51:56.283120 - Action: Ajout de fichier | Utilisateur: alberic | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\alo.txt ajouté.
+2025-01-11 17:54:15.661090 - Action: Ajout de fichier | Utilisateur: alberic | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\Aldi.txt ajouté.
+2025-01-11 17:54:15.684497 - Action: Ajout de fichier | Utilisateur: alberic | Details: Fichier C:\Users\Master\projet_GS15\projet_coffre_fort\Aldi.txt ajouté.
+2025-01-11 18:03:29.628472 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-11 18:32:55.891918 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-11 18:36:16.236424 - Action: Connexion echouee | Utilisateur: alberic | Details: Mots de passe incorrect
+2025-01-11 18:36:56.216031 - Action: Connexion echouee | Utilisateur: azertyAZERTY1: | Details: Utilisateur inconnu
+2025-01-11 18:37:31.778506 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 01:43:41.642121 - Action: Connexion echouee | Utilisateur: sun | Details: Mots de passe incorrect
+2025-01-12 01:51:03.809943 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 03:18:22.168034 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:02:12.399164 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:04:40.539920 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:10:18.780301 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:13:02.391586 - Action: Connexion echouee | Utilisateur: azertyAZERTY1: | Details: Utilisateur inconnu
+2025-01-12 04:14:08.454782 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:15:11.278044 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:32:28.531344 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:36:33.742480 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:43:01.963760 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:48:03.205778 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:50:59.297982 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:52:30.914098 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 04:59:09.735486 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 05:00:43.011887 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
+2025-01-12 05:07:28.950557 - Action: Connexion | Utilisateur: alberic | Details: un nouvel utilisateur connecte
